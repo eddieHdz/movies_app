@@ -21,16 +21,16 @@ class CastCard extends StatelessWidget {
             child: CupertinoActivityIndicator(),
           );
         }
-
+        final List<Cast> cast = snapshot.data!;
         return Container(
           margin: EdgeInsets.only(bottom: 30),
           width: double.infinity,
           height: 180,
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: 15,
             scrollDirection: Axis.horizontal,
             itemBuilder: (_, index) {
-              return _CastingCard();
+              return _CastingCard(cast[index]);
             },
           ),
         );
@@ -40,6 +40,14 @@ class CastCard extends StatelessWidget {
 }
 
 class _CastingCard extends StatelessWidget {
+  /* final String actor;
+  final String profileImg;
+
+  const _CastingCard(this.actor, this.profileImg); */
+  final Cast actor;
+
+  const _CastingCard(this.actor);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,7 +60,7 @@ class _CastingCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage('https://via.placeholder.com/150x300'),
+                image: NetworkImage(actor.fullProfilePath),
                 width: 100,
                 height: 140,
                 fit: BoxFit.cover),
@@ -61,7 +69,7 @@ class _CastingCard extends StatelessWidget {
             height: 5,
           ),
           Text(
-            'Nombre Actor',
+            actor.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
